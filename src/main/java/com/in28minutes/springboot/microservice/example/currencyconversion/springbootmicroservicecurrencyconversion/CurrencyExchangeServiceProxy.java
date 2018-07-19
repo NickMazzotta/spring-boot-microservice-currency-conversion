@@ -1,12 +1,17 @@
 package com.in28minutes.springboot.microservice.example.currencyconversion.springbootmicroservicecurrencyconversion;
 
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 
 // hard coded connection to one instance of forex service
-@FeignClient(name="forex-service", url="localhost:8000")
+//@FeignClient(name="forex-service", url="localhost:8000")
+
+// use ribbon for load balancing
+@FeignClient(name="forex-service")
+@RibbonClient(name="forex-service")
 public interface CurrencyExchangeServiceProxy {
 
 	@GetMapping("/currency-exchange/from/{from}/to/{to}")
